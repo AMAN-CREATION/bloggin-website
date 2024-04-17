@@ -8,11 +8,9 @@ export default function SignUp() {
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.username || !formData.email || !formData.password) {
@@ -21,19 +19,15 @@ export default function SignUp() {
     try {
       setLoading(true);
       setErrorMessage(null);
-
       const res = await fetch("/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-
       const data = await res.json();
-
       if (data.success === false) {
         return setErrorMessage(data.message);
       }
-
       setLoading(false);
       if (res.ok) {
         navigate("/sign-in");
@@ -43,7 +37,6 @@ export default function SignUp() {
       setLoading(false);
     }
   };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
       <div className="max-w-md w-full p-8 bg-white dark:bg-gray-800 shadow-md rounded-md">
